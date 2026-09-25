@@ -1,7 +1,1 @@
-mvn archetype:generate \
-  -DgroupId=com.stone.maven \
-  -DartifactId=resumable_download_maven_plugin \
-  -DarchetypeArtifactId=maven-archetype-plugin \
-  -DarchetypeGroupId=org.apache.maven.archetypes \
-  -DarchetypeVersion=1.4 \
-  -DinteractiveMode=false
+
