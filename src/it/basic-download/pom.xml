@@ -1,12 +1,12 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.stone.it</groupId>
+    <groupId>com.github.HU-SHD.it</groupId>
     <artifactId>basic-download-test</artifactId>
     <version>1.0</version>
     <build>
         <plugins>
             <plugin>
-                <groupId>org.stone</groupId>
+                <groupId>com.github.HU-SHD</groupId>
                 <artifactId>resumble_download_maven_plugin</artifactId>
                 <version>@project.version@</version> <!-- 注意必须是 @project.version@ -->
                 <executions>

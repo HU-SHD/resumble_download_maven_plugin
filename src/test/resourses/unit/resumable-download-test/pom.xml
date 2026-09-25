@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.stone</groupId>
+    <groupId>com.github.HU-SHD</groupId>
     <artifactId>test-project</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
@@ -32,13 +32,24 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.stone</groupId>
+                <groupId>com.github.HU-SHD</groupId>
                 <artifactId>resumble_download_maven_plugin</artifactId>
-                <version>1.0-SNAPSHOT</version>
-                <configuration>
-                    <url>https:/example.com/test-file.bin</url>
-                    <outputDirectory>${project.build.directory}/downloads</outputDirectory>
-                </configuration>
+                <version>v1.0.0</version>
+                <executions>
+                    <execution>
+                        <id>download-large-file</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>download</goal>
+                        </goals>
+                        <configuration>
+                            <url>https://example.com/datasets/large-dataset.zip</url>
+                            <outputDirectory>${project.build.directory}/downloads</outputDirectory>
+                            <fileName>dataset.zip</fileName>
+                            <skipIfExists>true</skipIfExists>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

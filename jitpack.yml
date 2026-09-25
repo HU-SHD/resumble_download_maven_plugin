@@ -1,4 +1,7 @@
 jdk:
-  - openjdk23
+  - openjdk21          # 先使用一个可用的基础JDK启动SDKMAN
+before_install:
+  - sdk install java 23-open || true   # 尝试安装JDK 23，若已存在则忽略错误
+  - sdk use java 23-open                # 切换到JDK 23
 install:
   - mvn clean install -DskipTests
