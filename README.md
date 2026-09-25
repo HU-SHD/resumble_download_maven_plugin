@@ -1,6 +1,6 @@
 # Resumble Download Maven Plugin
 
-[![Maven Central](https://img.shields.io/badge/maven--central-1.0--SNAPSHOT-blue.svg)](https://github.com/HU-SHD/resumble_download_maven_plugin)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-HU--SHD-blue.svg)](https://github.com/HU-SHD/resumble_download_maven_plugin)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Java](https://img.shields.io/badge/Java-23-orange.svg)](https://openjdk.org/)
 [![Maven](https://img.shields.io/badge/Maven-3.9%2B-red.svg)](https://maven.apache.org/)
@@ -43,28 +43,56 @@
 
 ## 快速开始
 
-### 1. 构建并安装插件
+> **⚠️ 重要提示**：本插件托管在 **GitHub Packages** 上。即使本仓库是公开的，GitHub Packages 仍然要求认证访问。因此，使用者**必须**生成一个 GitHub Personal Access Token 才能拉取依赖。
 
-从源码构建并安装到本地 Maven 仓库：
+### 1. 生成 GitHub Personal Access Token
 
-```bash
-git clone https://github.com/HU-SHD/resumble_download_maven_plugin.git
-cd resumble_download_maven_plugin
-mvn clean install
+1. 登录 GitHub，点击右上角头像 → **Settings**。
+2. 在左侧边栏底部点击 **Developer settings**。
+3. 点击 **Personal access tokens** → **Tokens (classic)**。
+4. 点击 **Generate new token (classic)**。
+5. 填写 Note（如 `maven-read-packages`），勾选权限：**`read:packages`**。
+6. 点击生成，并**立即复制** Token（格式类似 `ghp_xxxxxxxxxxxx`）。
+
+### 2. 配置 `~/.m2/settings.xml`
+
+在你的本地 Maven 配置文件（Windows 下路径通常为 `C:\Users\你的用户名\.m2\settings.xml`）中，添加以下内容：
+
+```xml
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                              https://maven.apache.org/xsd/settings-1.0.0.xsd">
+  <servers>
+    <server>
+      <id>github</id>
+      <username>你的GitHub用户名</username>
+      <password>你的GitHub Token</password>
+    </server>
+  </servers>
+</settings>
 ```
 
-安装成功后，插件位于本地仓库：  
-`~/.m2/repository/org/stone/resumble_download_maven_plugin/1.0-SNAPSHOT/`
+### 3. 在项目中引入仓库和插件
 
-### 2. 在项目中引入插件
+在你的项目 `pom.xml` 中添加 GitHub Packages 仓库：
 
-在需要使用插件的项目 `pom.xml` 的 `<build><plugins>` 中添加：
+```xml
+<repositories>
+    <repository>
+        <id>github</id>
+        <url>https://maven.pkg.github.com/HU-SHD/resumble_download_maven_plugin</url>
+    </repository>
+</repositories>
+```
+
+然后在 `<build><plugins>` 中引入插件（注意坐标已变更为 `com.github.HU-SHD`）：
 
 ```xml
 <plugin>
-    <groupId>org.stone</groupId>
+    <groupId>com.github.HU-SHD</groupId>
     <artifactId>resumble_download_maven_plugin</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <executions>
         <execution>
             <id>download-large-file</id>
@@ -83,7 +111,9 @@ mvn clean install
 </plugin>
 ```
 
-执行 `mvn initialize`，插件会自动下载文件到 `target/downloads/dataset.zip`。如果下载中断，下次构建会从断点继续。
+### 4. 触发下载
+
+在你的项目根目录执行 `mvn initialize`，Maven 会自动从 GitHub Packages 下载插件并执行断点续传下载。
 
 ---
 
@@ -117,9 +147,9 @@ mvn clean install
 <build>
     <plugins>
         <plugin>
-            <groupId>org.stone</groupId>
+            <groupId>com.github.HU-SHD</groupId>
             <artifactId>resumble_download_maven_plugin</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0</version>
             <executions>
                 <execution>
                     <id>download-model</id>
@@ -154,7 +184,7 @@ mvn clean install
 ### 命令行直接调用
 
 ```bash
-mvn org.stone:resumble_download_maven_plugin:1.0-SNAPSHOT:download \
+mvn com.github.HU-SHD:resumble_download_maven_plugin:1.0.0:download \
     -Dresumble.url=https://example.com/large-file.zip \
     -Dresumble.outputDirectory=./downloads \
     -Dresumble.fileName=large-file.zip
@@ -189,7 +219,30 @@ mvn clean verify
 4. **集成测试**：通过 `maven-invoker-plugin` 在独立环境中调用插件下载真实文件，并运行 `verify.groovy` 校验结果。
 5. **安装**：将插件安装到本地仓库（仅 `install` 阶段）。
 
-构建成功后，终端会显示 `BUILD SUCCESS`，插件 JAR 位于 `target/resumble_download_maven_plugin-1.0-SNAPSHOT.jar`。
+构建成功后，终端会显示 `BUILD SUCCESS`，插件 JAR 位于 `target/resumble_download_maven_plugin-1.0.0.jar`。
+
+### 发布到 GitHub Packages
+
+如果你希望将此插件发布到你自己的 GitHub Packages，需要确保：
+
+1. 在 `~/.m2/settings.xml` 中配置具有 `write:packages` 权限的 Token（`<id>` 必须与 `pom.xml` 中的 `<distributionManagement>` 一致）。
+2. 在 `pom.xml` 中配置 `<distributionManagement>`：
+
+```xml
+<distributionManagement>
+    <repository>
+        <id>github</id>
+        <name>GitHub Packages</name>
+        <url>https://maven.pkg.github.com/HU-SHD/resumble_download_maven_plugin</url>
+    </repository>
+</distributionManagement>
+```
+
+3. 执行发布命令：
+
+```bash
+mvn clean deploy
+```
 
 ---
 
