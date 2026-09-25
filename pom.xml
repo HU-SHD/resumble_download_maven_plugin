@@ -24,6 +24,12 @@
     <!-- ============依赖============= -->
     <dependencies>
         <dependency>
+            <groupId>com.github.HU-SHD</groupId>
+            <artifactId>resumble_download_maven_plugin</artifactId>
+            <version>v1.0.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
             <version>3.6.0</version>
@@ -119,7 +125,12 @@
                 </executions>
             </plugin>
         </plugins>
-
     </build>
 
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 </project>
