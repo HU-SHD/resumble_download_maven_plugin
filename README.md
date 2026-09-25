@@ -221,29 +221,6 @@ mvn clean verify
 
 构建成功后，终端会显示 `BUILD SUCCESS`，插件 JAR 位于 `target/resumble_download_maven_plugin-1.0.0.jar`。
 
-### 发布到 GitHub Packages
-
-如果你希望将此插件发布到你自己的 GitHub Packages，需要确保：
-
-1. 在 `~/.m2/settings.xml` 中配置具有 `write:packages` 权限的 Token（`<id>` 必须与 `pom.xml` 中的 `<distributionManagement>` 一致）。
-2. 在 `pom.xml` 中配置 `<distributionManagement>`：
-
-```xml
-<distributionManagement>
-    <repository>
-        <id>github</id>
-        <name>GitHub Packages</name>
-        <url>https://maven.pkg.github.com/HU-SHD/resumble_download_maven_plugin</url>
-    </repository>
-</distributionManagement>
-```
-
-3. 执行发布命令：
-
-```bash
-mvn clean deploy
-```
-
 ---
 
 ## 项目结构
