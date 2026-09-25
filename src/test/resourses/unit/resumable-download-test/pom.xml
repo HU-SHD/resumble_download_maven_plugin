@@ -34,7 +34,7 @@
             <plugin>
                 <groupId>com.github.HU-SHD</groupId>
                 <artifactId>resumble_download_maven_plugin</artifactId>
-                <version>v1.0.0</version>
+                <version>1.0.0</version>
                 <executions>
                     <execution>
                         <id>download-large-file</id>
