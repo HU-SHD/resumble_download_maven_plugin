@@ -140,7 +140,7 @@ public class ResumableDownloadMojo extends AbstractMojo {
         if(fileName != null && !fileName.trim().isEmpty()){
             return fileName;
         }
-        String path = url.substring(url.lastIndexOf("/" + 1));
+        String path = url.substring(url.lastIndexOf("/") + 1);
         int queryIndex = path.indexOf("?");
         if(queryIndex > 0){
             path = path.substring(0,queryIndex);
