@@ -11,7 +11,7 @@
 
     <name>Resumble Download Maven Plugin</name>
     <description>A Maven plugin for downloading large files with resume support</description>
-    <url></url>
+    <url>https://github.com/HU-SHD/resumble_download_maven_plugin.git</url>
 
     <properties>
         <maven.compiler.source>23</maven.compiler.source>
