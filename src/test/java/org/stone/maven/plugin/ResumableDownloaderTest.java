@@ -3,6 +3,8 @@ package org.stone.maven.plugin;
 import com.sun.net.httpserver.HttpServer;
 import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -68,36 +70,27 @@ class ResumableDownloaderTest {
         }
     }
 
-    @Test
-    void testFullDownload() throws Exception {
+    @ParameterizedTest(name = "{0}")
+    @CsvSource({
+            "全量下载,0",
+            "断点续传（模拟已下载512KB）,524288"
+    })
+    void testDownload(String casename, int existingBytes) throws Exception{
         Path partFile = tempDir.resolve("test.bin.part");
         Path targetFile = tempDir.resolve("test.bin");
 
-        ResumableDownloader downloader = new ResumableDownloader(
-                new SystemStreamLog(), 5000, 5000, false);
-        downloader.download(
-                new java.net.URI("http://localhost:" + server.getAddress().getPort() + "/file.bin"),
-                partFile, targetFile);
-
-        assertTrue(Files.exists(targetFile));
-        assertArrayEquals(testData, Files.readAllBytes(targetFile));
-    }
-
-    @Test
-    void testResumeDownload() throws Exception {
-        Path partFile = tempDir.resolve("test.bin.part");
-        Path targetFile = tempDir.resolve("test.bin");
-
-        // 模拟已下载 512KB
-        try (FileOutputStream fos = new FileOutputStream(partFile.toFile())) {
-            fos.write(testData, 0, 512 * 1024);
+        if(existingBytes > 0){
+            try(FileOutputStream fos = new FileOutputStream(partFile.toFile())){
+                fos.write(testData, 0, existingBytes);
+            }
         }
 
         ResumableDownloader downloader = new ResumableDownloader(
                 new SystemStreamLog(), 5000, 5000, false);
         downloader.download(
                 new java.net.URI("http://localhost:" + server.getAddress().getPort() + "/file.bin"),
-                partFile, targetFile);
+                partFile, targetFile
+        );
 
         assertTrue(Files.exists(targetFile));
         assertArrayEquals(testData, Files.readAllBytes(targetFile));
