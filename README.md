@@ -59,10 +59,10 @@
 在你的本地 Maven 配置文件（Windows 下路径通常为 `C:\Users\你的用户名\.m2\settings.xml`）中，添加以下内容：
 
 ```xml
-<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.1"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
-                              https://maven.apache.org/xsd/settings-1.0.0.xsd">
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.1
+                              https://maven.apache.org/xsd/settings-1.0.1.xsd">
   <servers>
     <server>
       <id>github</id>
@@ -92,7 +92,7 @@
 <plugin>
     <groupId>com.github.HU-SHD</groupId>
     <artifactId>resumble_download_maven_plugin</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <executions>
         <execution>
             <id>download-large-file</id>
@@ -149,7 +149,7 @@
         <plugin>
             <groupId>com.github.HU-SHD</groupId>
             <artifactId>resumble_download_maven_plugin</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
             <executions>
                 <execution>
                     <id>download-model</id>
@@ -277,4 +277,16 @@ resumble_download_maven_plugin/
 
 ---
 
+---
+
+## 变更日志
+
+### [1.0.1] - 2026-09-30
+- 将 `ResumableDownloaderTest` 重构为 JUnit 5 参数化测试，覆盖多种下载场景。
+- 提升测试可维护性与覆盖率。
+
+### [1.0.0] - 2026-09-25
+- 首次发布。
+
 **© 2026 HU-SHD. 保留所有权利。**
+

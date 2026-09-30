@@ -6,7 +6,7 @@
 
     <groupId>com.github.HU-SHD</groupId>
     <artifactId>resumble_download_maven_plugin</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>maven-plugin</packaging>
 
     <name>Resumble Download Maven Plugin</name>
